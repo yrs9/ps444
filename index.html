@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>متجر الألعاب الخاص</title>
+    <style>
+        body { background-color: #121212; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .game-card { background: #1e1e1e; border-radius: 10px; padding: 15px; margin: 15px auto; width: 300px; display: inline-block; vertical-align: top; }
+        .game-card img { width: 100%; border-radius: 5px; }
+        button { background: #0070d1; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        button:hover { background: #005bb5; }
+    </style>
+</head>
+<body>
+
+    <h1>متجر بلايستيشن 4 المعدل</h1>
+    <div id="games-container">جاري تحميل الألعاب...</div>
+
+    <script>
+        // رابط ملف الـ JSON الخاص بك على GitHub (استبدله بالرابط المباشر أو الخام Raw)
+        const jsonUrl = 'store.json';
+
+        fetch(jsonUrl)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('games-container');
+                container.innerHTML = '';
+                data.forEach(game => {
+                    container.innerHTML += `
+                        <div class="game-card">
+                            <img src="${game.icon}" alt="${game.title}">
+                            <h3>${game.title}</h3>
+                            <p>${game.description}</p>
+                            <button onclick="installGame('${game.pkg_url}')">تثبيت اللعبة</button>
+                        </div>
+                    `;
+                });
+            });
+
+        function installGame(pkgUrl) {
+            // إرسال أمر التثبيت المباشر لمنفذ GoldHEN على الـ PS4
+            fetch('http://127.0.0.1:12800/api/install', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'direct', packages: [pkgUrl] })
+            })
+            .then(response => {
+                if(response.ok) {
+                    alert('تم إرسال أمر التثبيت إلى الـ PS4 بنجاح!');
+                } else {
+                    alert('فشل الاتصال بجهاز PS4، تأكد من تفعيل GoldHEN.');
+                }
+            })
+            .catch(error => {
+                alert('خطأ في الاتصال: ' + error);
+            });
+        }
+    </script>
+
+</body>
+</html>
