@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Game Title 1",
+    "description": "وصف قصير للعبة الأولى",
+    "icon": "https://via.placeholder.com/300x400.png?text=Cover+1",
+    "pkg_url": "https://example.com/downloads/game1.pkg"
+  },
+  {
+    "id": 2,
+    "title": "Game Title 2",
+    "description": "وصف قصير للعبة الثانية",
+    "icon": "https://via.placeholder.com/300x400.png?text=Cover+2",
+    "pkg_url": "https://example.com/downloads/game2.pkg"
+  }
+]
